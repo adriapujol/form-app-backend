@@ -59,8 +59,12 @@ const userScheema = new mongoose.Schema({
         type: String,
         required: true,
         default: 'no'
+    },
+    formDone: {
+        type: Boolean,
+        default: false
     }
-});
+}, { timestamps: true });
 
 const UserModel = mongoose.model('user', userScheema);
 

@@ -1,12 +1,13 @@
 const express = require('express');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const UserModel = require('./models/User');
 const app = express();
 
 const usersRouter = require('./routes/users');
 
+app.use(cors());
+app.use(express.json());
 
 /// DATABASE CONNECTION
 mongoose.connect(process.env.DB,
