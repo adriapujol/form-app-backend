@@ -5,9 +5,9 @@ const User = require('../models/User');
 router.get('/', async (req, res) => {
     try {
         const users = await User.find();
-        res.status(200).json(users);
+        res.status(200).send(users);
     } catch {
-        res.status(500).json({ message: "There was an error, try again later." });
+        res.status(500).send({ message: "There was an error, try again later." });
     }
 });
 
@@ -32,12 +32,21 @@ router.post('/add', async (req, res) => {
         });
         await newUser.save();
         // console.log("user added");
-        res.status(200).json(newUser);
+        res.status(200).send(newUser);
     } catch (err) {
-        res.status(500).json({ message: "There was an error, try again later." });
+        res.status(500).send({ message: "There was an error, try again later." });
+    }
+});
+
+router.delete('/delete/:id', async (req, res) => {
+    const id = req.params.id;
+    try {
+        await User.findByIdAndDelete(id);
+        res.status(200).send('User Deleted');
+    } catch (err) {
+        res.status(500).send(`There was and error deleting the user with id: ${id}`);
     }
 })
-
 
 
 module.exports = router;
