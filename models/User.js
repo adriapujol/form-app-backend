@@ -1,71 +1,81 @@
 const mongoose = require('mongoose');
 
-const userScheema = new mongoose.Schema({
-    fname: {
-        type: String,
-        required: true
-    },
-    lname: {
-        type: String,
-        required: true
-    },
-    address: {
-        type: String,
-        required: true
-    },
-    phone: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        unique: true,
-        required: true
-    },
-    numberPersons: {
-        type: Number,
-        required: true,
-        default: 0
-    },
-    numberMinors: {
-        type: Number,
-        required: true,
-        default: 0
-    },
-    typeFood: {
+const userSchema = new mongoose.Schema({
+    username: {
         type: String,
         required: true,
-        default: 'Omnivore'
+        unique: true
     },
-    allergies: {
-        type: String,
-    },
-    hotel: {
+    password: {
         type: String,
         required: true,
-        default: 'no'
     },
-    numberRooms: {
-        type: Number,
-        required: true,
-        default: 0
-    },
-    trasport: {
-        type: String,
-        required: true,
-        default: 'no'
-    },
-    childcare: {
-        type: String,
-        required: true,
-        default: 'no'
+    formAnswers: {
+
+        fname: {
+            type: String,
+            default: ""
+        },
+        lname: {
+            type: String,
+            default: ""
+        },
+        address: {
+            type: String,
+            default: ""
+        },
+        phone: {
+            type: String,
+            default: ""
+        },
+        email: {
+            type: String,
+            default: ""
+        },
+        numberPersons: {
+            type: Number,
+            default: 0
+        },
+        numberMinors: {
+            type: Number,
+            default: 0
+        },
+        typeFood: {
+            type: String,
+            default: 'Omnivore'
+        },
+        allergies: {
+            type: String,
+            default: ""
+        },
+        hotel: {
+            type: String,
+            default: 'no'
+        },
+        numberRooms: {
+            type: Number,
+            default: 0
+        },
+        transport: {
+            type: String,
+            default: 'no'
+        },
+        childcare: {
+            type: String,
+            default: 'no'
+        },
     },
     formDone: {
         type: Boolean,
         default: false
+    },
+    unreadNews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'News' }],
+    role: {
+        type: String,
+        required: true
     }
 }, { timestamps: true });
 
-const UserModel = mongoose.model('user', userScheema);
+const UserModel = mongoose.model('user', userSchema);
 
 module.exports = UserModel;
