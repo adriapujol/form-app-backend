@@ -69,7 +69,7 @@ const userSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
-    unreadNews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'News' }],
+    unreadNews: [{ type: String }],
     role: {
         type: String,
         required: true

@@ -50,8 +50,12 @@ router.post('/form/:id', async (req, res) => {
 router.delete('/delete/:id', async (req, res) => {
     const id = req.params.id;
     try {
-        await User.findByIdAndDelete(id);
-        res.status(200).send('User Deleted');
+        if (req.body.role === "admin") {
+            await User.findByIdAndDelete(id);
+            res.status(200).send('User Deleted');
+        } else {
+            res.status(401).json("You don't have clearance to do that");
+        }
     } catch (err) {
         res.status(500).send(`There was and error deleting the user with id: ${id}`);
     }
