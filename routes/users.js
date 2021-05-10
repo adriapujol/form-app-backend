@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const { verifyToken } = require('../jwt');
 
-router.get('/', async (req, res) => {
+
+router.get('/', verifyToken, async (req, res) => {
     try {
-        const users = await User.find();
+        const users = await User.find({}, { password: 0 });
         res.status(200).send(users);
     } catch {
         res.status(500).send({ message: "There was an error, try again later." });
@@ -13,7 +15,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const user = await User.findById(req.params.id);
+        const user = await User.findById(req.params.id).select("-password");
         res.status(200).send(user);
     } catch {
         res.status(500).json("Cannot find user");

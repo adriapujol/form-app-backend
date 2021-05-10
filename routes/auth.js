@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 
+const { createToken } = require('../jwt');
+
 // Register route
 router.post('/register', async (req, res) => {
 
@@ -26,9 +28,18 @@ router.post('/register', async (req, res) => {
 
         });
         const savedUser = await newUser.save();
-        res.status(200).json({ userId: savedUser._id, username: savedUser.username });
+
+        const accessToken = createToken(savedUser);
+
+        // save token in cookie
+        res.cookie("access-token", accessToken, {
+            maxAge: 172800000,
+            httpOnly: true
+        });
+
+        res.status(200).json({ id: savedUser._id, username: savedUser.username, role: savedUser.role });
     } catch (error) {
-        res.status(500).json({ error });
+        res.status(500).json({ error: error });
     }
 });
 
@@ -45,12 +56,24 @@ router.post('/login', async (req, res) => {
         // check if password is correct
         const validPassword = await bcrypt.compare(req.body.password, user.password);
 
-        if (!validPassword) return res.status(400).json({ error: "Incorrect password" });
+        if (!validPassword) {
+            res.status(400).json({ error: "Incorrect password" });
+        } else {
 
-        res.status(200).json({ id: user._id, username: user.username });
+            const accessToken = createToken(user);
+
+            // save token in cookie
+            res.cookie("access-token", accessToken, {
+                maxAge: 172800000,
+                httpOnly: true
+            });
+
+            res.status(200).json({ id: user._id, username: user.username, role: user.role });
+        }
+
 
     } catch (error) {
-        res.status(400).json({ error: "Cannot login" });
+        res.status(400).json({ error: "Something went wrong" });
     }
 
 
