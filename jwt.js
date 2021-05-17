@@ -14,8 +14,9 @@ const verifyToken = (req, res, next) => {
 
     const accessToken = req.cookies["access-token"];
 
+    console.log(accessToken);
 
-    if (!accessToken) return res.sendStatus(401);
+    if (!accessToken) return res.status(401).json({ error: "Not allowed" });
 
     verify(accessToken, process.env.TOKEN_SECRET, (err, user) => {
         if (err) return res.sendStatus(403);
