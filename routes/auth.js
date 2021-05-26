@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const { createToken } = require('../jwt');
+const { createToken, verifyToken } = require('../jwt');
+const { authUser } = require('../basicAuth');
 
 // Register route
 router.post('/register', async (req, res) => {
@@ -77,6 +78,20 @@ router.post('/login', async (req, res) => {
 
 
 
+});
+
+router.get('/', verifyToken, authUser, async (req, res) => {
+    console.log(req.user)
+    if (!req.user) {
+        return res.status(500).json({ message: "You need to log in" })
+    } else {
+        try {
+            const user = await User.findOne({ username: req.user.username });
+            res.status(200).send(user);
+        } catch {
+            res.status(500).json("Cannot find user");
+        }
+    }
 });
 
 module.exports = router;

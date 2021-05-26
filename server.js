@@ -2,11 +2,14 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
-const UserModel = require('./models/User');
+// const UserModel = require('./models/User');
 const app = express();
 
+
+// Routes
 const usersRouter = require('./routes/users');
 const registerRouter = require('./routes/auth');
+const adminRouter = require('./routes/admin');
 
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
@@ -24,6 +27,7 @@ db.once('open', () => console.log('Connected to Mongoose'));
 
 app.use('/users', usersRouter);
 app.use('/user', registerRouter);
+app.use('/admin', adminRouter);
 
 const PORT = process.env.PORT || 3001;
 
