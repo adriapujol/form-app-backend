@@ -15,7 +15,7 @@ router.get('/', verifyToken, authUser, authRole("admin"), async (req, res) => {
     }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', verifyToken, authUser, async (req, res) => {
     try {
         const user = await User.findById(req.params.id).select("-password");
         res.status(200).send(user);
@@ -26,7 +26,7 @@ router.get('/:id', async (req, res) => {
 
 
 
-router.post('/form/:id', authUser, async (req, res) => {
+router.post('/form/:id', async (req, res) => {
     try {
         await User.findByIdAndUpdate(req.params.id, {
             formAnswers: {
@@ -53,19 +53,19 @@ router.post('/form/:id', authUser, async (req, res) => {
     }
 });
 
-router.delete('/delete/:id', async (req, res) => {
-    const id = req.params.id;
-    try {
-        if (req.body.role === "admin") {
-            await User.findByIdAndDelete(id);
-            res.status(200).send('User Deleted');
-        } else {
-            res.status(401).json("You don't have clearance to do that");
-        }
-    } catch (err) {
-        res.status(500).send(`There was and error deleting the user with id: ${id}`);
-    }
-})
+// router.delete('/delete/:id', async (req, res) => {
+//     const id = req.params.id;
+//     try {
+//         if (req.body.role === "admin") {
+//             await User.findByIdAndDelete(id);
+//             res.status(200).send('User Deleted');
+//         } else {
+//             res.status(401).json("You don't have clearance to do that");
+//         }
+//     } catch (err) {
+//         res.status(500).send(`There was and error deleting the user with id: ${id}`);
+//     }
+// })
 
 
 module.exports = router;

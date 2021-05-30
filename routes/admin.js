@@ -21,15 +21,11 @@ router.get('/users', verifyToken, authUser, authRole("admin"), async (req, res) 
 
 //DELETE USER
 
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/delete/:id', verifyToken, authUser, authRole("admin"), async (req, res) => {
     const id = req.params.id;
     try {
-        if (req.body.role === "admin") {
-            await User.findByIdAndDelete(id);
-            res.status(200).send('User Deleted');
-        } else {
-            res.status(401).json("You don't have clearance to do that");
-        }
+        await User.findByIdAndDelete(id);
+        res.status(200).send('User Deleted');
     } catch (err) {
         res.status(500).send(`There was and error deleting the user with id: ${id}`);
     }
