@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
-const { createToken, verifyToken } = require('../jwt');
+const { createToken, verifyToken, deleteToken } = require('../jwt');
 const { authUser } = require('../basicAuth');
 
-// Register route
+// Register route USERS
 router.post('/register', async (req, res) => {
 
     if (!req.body.username || !req.body.password || !req.body.role) return res.status(500).json("Check all fields");
@@ -43,7 +43,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
-// Login Route
+// Login Route USERS
 
 router.post('/login', async (req, res) => {
     console.log(req.body);
@@ -79,6 +79,12 @@ router.post('/login', async (req, res) => {
 
 
 });
+
+// Logout USERS
+
+router.get('/logout', deleteToken);
+
+//get current User
 
 router.get('/', verifyToken, authUser, async (req, res) => {
     console.log(req.user)

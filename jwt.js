@@ -10,6 +10,15 @@ const createToken = user => {
     return accessToken;
 }
 
+const deleteToken = (req, res) => {
+    try {
+        res.clearCookie("access-token");
+        res.status(200).json({ message: "logged out" });
+    } catch (error) {
+        res.status(500).json({ error: "failed to log out" });
+    }
+}
+
 const verifyToken = (req, res, next) => {
 
     const accessToken = req.cookies["access-token"];
@@ -25,4 +34,4 @@ const verifyToken = (req, res, next) => {
     });
 }
 
-module.exports = { createToken, verifyToken }
+module.exports = { createToken, verifyToken, deleteToken }
