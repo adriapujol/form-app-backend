@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const User = require('../models/User');
 const Admin = require('../models/Admin');
 const { verifyToken } = require('../jwt');
 const { authUser, authRole } = require('../basicAuth');

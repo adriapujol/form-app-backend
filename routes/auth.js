@@ -56,6 +56,7 @@ router.post('/login', async (req, res) => {
         // check if password is correct
         const validPassword = await bcrypt.compare(req.body.password, user.password);
 
+
         if (!validPassword) {
             res.status(400).json({ error: "Incorrect password" });
         } else {
@@ -68,7 +69,10 @@ router.post('/login', async (req, res) => {
                 httpOnly: true
             });
 
-            res.status(200).json({ id: user._id, username: user.username, role: user.role });
+            const userToBeSent = user.toObject();
+            delete userToBeSent.password;
+
+            res.status(200).send(userToBeSent);
         }
 
 
@@ -92,7 +96,7 @@ router.get('/', verifyToken, authUser, async (req, res) => {
         return res.status(500).json({ message: "You need to log in" })
     } else {
         try {
-            const user = await User.findOne({ username: req.user.username });
+            const user = await User.findOne({ username: req.user.username }, { password: 0 });
             res.status(200).send(user);
         } catch {
             res.status(500).json("Cannot find user");

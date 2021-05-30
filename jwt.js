@@ -15,7 +15,7 @@ const deleteToken = (req, res) => {
         res.clearCookie("access-token");
         res.status(200).json({ message: "logged out" });
     } catch (error) {
-        res.status(500).json({ error: "failed to log out" });
+        res.status(400).json({ error: "Incorrect password" });
     }
 }
 
