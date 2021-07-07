@@ -26,7 +26,7 @@ router.get('/:id', verifyToken, authUser, async (req, res) => {
 
 
 
-router.post('/form/:id', async (req, res) => {
+router.put('/form/:id', async (req, res) => {
     try {
         await User.findByIdAndUpdate(req.params.id, {
             formAnswers: {

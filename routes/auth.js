@@ -3,7 +3,8 @@ const router = express.Router();
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const { createToken, verifyToken, deleteToken } = require('../jwt');
-const { authUser } = require('../basicAuth');
+const { authUser, authRole } = require('../basicAuth');
+
 
 // Register route USERS
 router.post('/register', async (req, res) => {
@@ -32,10 +33,12 @@ router.post('/register', async (req, res) => {
         const accessToken = createToken(savedUser);
 
         // save token in cookie
-        res.cookie("access-token", accessToken, {
-            maxAge: 172800000,
-            httpOnly: true
-        });
+        // DON'T USE IT WHEN CREATING 
+
+        // res.cookie("access-token", accessToken, {
+        //     maxAge: 172800000,
+        //     httpOnly: true
+        // });
 
         res.status(200).json({ id: savedUser._id, username: savedUser.username, role: savedUser.role });
     } catch (error) {

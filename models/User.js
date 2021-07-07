@@ -42,7 +42,7 @@ const userSchema = new mongoose.Schema({
         },
         typeFood: {
             type: String,
-            default: 'Omnivore'
+            default: 'omnivore'
         },
         allergies: {
             type: String,
