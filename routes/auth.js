@@ -18,16 +18,45 @@ router.post('/register', async (req, res) => {
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
 
     try {
+
+        const childrenArray = [
+            {
+                fname: "",
+                lname: "",
+                age: 0,
+                typeFood: "not selected",
+                allergies: ""
+            },
+            {
+                fname: "",
+                lname: "",
+                age: 0,
+                typeFood: "not selected",
+                allergies: ""
+            },
+            {
+                fname: "",
+                lname: "",
+                age: 0,
+                typeFood: "not selected",
+                allergies: ""
+            }, {
+                fname: "",
+                lname: "",
+                age: 0,
+                typeFood: "not selected",
+                allergies: ""
+            }
+        ]
+
         const newUser = new User({
 
             username: req.body.username,
             password: hashedPassword,
-            formAnswers: {},
-            formDone: false,
-            unreadNews: [],
             role: req.body.role
 
         });
+        newUser.formAnswers.children = childrenArray;
         const savedUser = await newUser.save();
 
         const accessToken = createToken(savedUser);

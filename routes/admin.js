@@ -17,7 +17,7 @@ router.get('/users', verifyToken, authUser, authRole("admin"), async (req, res) 
 });
 
 //CREATE USER
-
+// in auth
 
 //DELETE USER
 

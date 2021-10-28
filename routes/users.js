@@ -33,21 +33,33 @@ router.put('/form/:id', async (req, res) => {
                 fname: req.body.fname,
                 lname: req.body.lname,
                 address: req.body.address,
+                cp: req.body.cp,
+                city: req.body.city,
                 phone: req.body.phone,
                 email: req.body.email,
-                numberPersons: req.body.numberPersons,
-                numberMinors: req.body.numberMinors,
                 typeFood: req.body.typeFood,
                 allergies: req.body.allergies,
+                plusOne: req.body.plusOne,
+                children: req.body.children,
                 hotel: req.body.hotel,
                 numberRooms: req.body.numberRooms,
                 transport: req.body.transport,
-                childcare: req.body.childcare,
+                childcare: req.body.childcare
             },
             formDone: true
         }, { useFindAndModify: false });
 
         res.status(200).json("Form updated");
+    } catch (err) {
+        res.status(500).json("There was an error, try again later.");
+    }
+});
+
+router.put('/isComing/:id', async (req, res) => {
+    try {
+        console.log(req.body.isComing);
+        await User.findByIdAndUpdate(req.params.id, { isComing: req.body.isComing }, { useFindAndModify: false });
+        res.status(200).json("We got it");
     } catch (err) {
         res.status(500).json("There was an error, try again later.");
     }
