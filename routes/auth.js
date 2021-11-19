@@ -24,28 +24,24 @@ router.post('/register', async (req, res) => {
                 fname: "",
                 lname: "",
                 age: 0,
-                typeFood: "not selected",
-                allergies: ""
+                typeFood: ""
             },
             {
                 fname: "",
                 lname: "",
                 age: 0,
-                typeFood: "not selected",
-                allergies: ""
+                typeFood: ""
             },
             {
                 fname: "",
                 lname: "",
                 age: 0,
-                typeFood: "not selected",
-                allergies: ""
+                typeFood: ""
             }, {
                 fname: "",
                 lname: "",
                 age: 0,
-                typeFood: "not selected",
-                allergies: ""
+                typeFood: ""
             }
         ]
 
