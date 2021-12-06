@@ -10,66 +10,113 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    isComing: {
+        type: Boolean
+    },
     formAnswers: {
 
         fname: {
             type: String,
-            default: ""
+            default: "",
+            minlength: 0,
+            maxlength: 20
         },
         lname: {
             type: String,
+            minlength: 0,
+            maxlength: 20,
             default: ""
         },
         address: {
             type: String,
+            minlength: 0,
+            maxlength: 50,
+            default: ""
+        },
+        cp: {
+            type: String,
+            minlength: 0,
+            maxlength: 20,
+            default: ""
+        },
+        city: {
+            type: String,
+            minlength: 0,
+            maxlength: 20,
             default: ""
         },
         phone: {
             type: String,
+            minlength: 0,
+            maxlength: 50,
             default: ""
         },
         email: {
             type: String,
+            minlength: 0,
+            maxlength: 50,
             default: ""
-        },
-        numberPersons: {
-            type: Number,
-            default: 0
-        },
-        numberMinors: {
-            type: Number,
-            default: 0
         },
         typeFood: {
             type: String,
-            default: 'Omnivore'
-        },
-        allergies: {
-            type: String,
+            minlength: 0,
+            maxlength: 150,
             default: ""
         },
-        hotel: {
-            type: String,
-            default: 'no'
+        plusOne: {
+            fname: {
+                type: String,
+                minlength: 0,
+                maxlength: 20,
+                default: ""
+            },
+            lname: {
+                type: String,
+                minlength: 0,
+                maxlength: 20,
+                default: ""
+            },
+            typeFood: {
+                type: String,
+                minlength: 0,
+                maxlength: 150,
+                default: ""
+            }
+
         },
-        numberRooms: {
-            type: Number,
-            default: 0
-        },
-        transport: {
-            type: String,
-            default: 'no'
-        },
-        childcare: {
-            type: String,
-            default: 'no'
-        },
+        children:
+            [{
+                fname: {
+                    type: String,
+                    minlength: 0,
+                    maxlength: 20,
+                    default: ""
+                },
+                lname: {
+                    type: String,
+                    minlength: 0,
+                    maxlength: 20,
+                    default: ""
+                },
+                age: {
+                    type: Number,
+                    minlength: 0,
+                    maxlength: 20,
+                    default: 0
+                },
+                typeFood: {
+                    type: String,
+                    minlength: 0,
+                    maxlength: 150,
+                    default: ""
+                }
+            }]
     },
     formDone: {
         type: Boolean,
         default: false
     },
-    unreadNews: [{ type: mongoose.Schema.Types.ObjectId, ref: 'News' }],
+    unreadNews: [{ type: String }],
     role: {
         type: String,
         required: true
