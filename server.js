@@ -30,6 +30,9 @@ db.once('open', () => console.log('Connected to Mongoose'));
 app.use('/users', usersRouter);
 app.use('/user', registerRouter);
 app.use('/admin', adminRouter);
+app.get('/', (req, res) => {
+    res.send('Hello to Jennifer et Carlos API');
+});
 
 const PORT = process.env.PORT || 3001;
 
