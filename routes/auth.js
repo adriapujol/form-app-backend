@@ -74,7 +74,6 @@ router.post('/register', async (req, res) => {
 // Login Route USERS
 
 router.post('/login', async (req, res) => {
-    console.log(req.body);
     try {
         // check if username exist
         const user = await User.findOne({ username: req.body.username });
@@ -119,7 +118,6 @@ router.get('/logout', deleteToken);
 //get current User
 
 router.get('/', verifyToken, authUser, async (req, res) => {
-    console.log(req.user)
     if (!req.user) {
         return res.status(500).json({ message: "You need to log in" })
     } else {
