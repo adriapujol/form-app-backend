@@ -57,13 +57,6 @@ router.post('/register', async (req, res) => {
 
         const accessToken = createToken(savedUser);
 
-        // save token in cookie
-        // DON'T USE IT WHEN CREATING 
-
-        // res.cookie("access-token", accessToken, {
-        //     maxAge: 172800000,
-        //     httpOnly: true
-        // });
 
         res.status(200).json({ id: savedUser._id, username: savedUser.username, role: savedUser.role });
     } catch (error) {
@@ -74,7 +67,7 @@ router.post('/register', async (req, res) => {
 // Login Route USERS
 
 router.post('/login', async (req, res) => {
-    console.log(req.body);
+
     try {
         // check if username exist
         const user = await User.findOne({ username: req.body.username });
@@ -94,7 +87,9 @@ router.post('/login', async (req, res) => {
             // save token in cookie
             res.cookie("access-token", accessToken, {
                 maxAge: 172800000,
-                httpOnly: true
+                httpOnly: true,
+                sameSite: "none",
+                secure: true
             });
 
             const userToBeSent = user.toObject();
@@ -119,7 +114,7 @@ router.get('/logout', deleteToken);
 //get current User
 
 router.get('/', verifyToken, authUser, async (req, res) => {
-    console.log(req.user)
+
     if (!req.user) {
         return res.status(500).json({ message: "You need to log in" })
     } else {
