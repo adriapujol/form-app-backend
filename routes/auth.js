@@ -94,7 +94,8 @@ router.post('/login', async (req, res) => {
             res.cookie("access-token", accessToken, {
                 maxAge: 172800000,
                 httpOnly: true,
-                sameSite: None
+                sameSite: None,
+                secure
             });
 
             const userToBeSent = user.toObject();
