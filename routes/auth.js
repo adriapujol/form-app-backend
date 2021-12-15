@@ -57,13 +57,6 @@ router.post('/register', async (req, res) => {
 
         // const accessToken = createToken(savedUser);
 
-        // save token in cookie
-        // DON'T USE IT WHEN CREATING 
-
-        // res.cookie("access-token", accessToken, {
-        //     maxAge: 172800000,
-        //     httpOnly: true
-        // });
 
         res.status(200).json({ id: savedUser._id, username: savedUser.username, role: savedUser.role });
     } catch (error) {
