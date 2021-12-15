@@ -55,7 +55,7 @@ router.post('/register', async (req, res) => {
         newUser.formAnswers.children = childrenArray;
         const savedUser = await newUser.save();
 
-        const accessToken = createToken(savedUser);
+        // const accessToken = createToken(savedUser);
 
         // save token in cookie
         // DON'T USE IT WHEN CREATING 
@@ -93,7 +93,9 @@ router.post('/login', async (req, res) => {
             // save token in cookie
             res.cookie("access-token", accessToken, {
                 maxAge: 172800000,
-                httpOnly: true
+                httpOnly: true,
+                sameSite: None,
+                secure
             });
 
             const userToBeSent = user.toObject();
