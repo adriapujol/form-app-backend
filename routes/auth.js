@@ -93,9 +93,7 @@ router.post('/login', async (req, res) => {
             // save token in cookie
             res.cookie("access-token", accessToken, {
                 maxAge: 172800000,
-                httpOnly: false,
-                sameSite: None,
-                secure: true
+                httpOnly: true
             });
 
             const userToBeSent = user.toObject();
